@@ -115,7 +115,7 @@ function Contact() {
     setLoading(true)
     setError("")
     try {
-      const response = await axios.post("http://localhost:5000/api/contact", {
+      const response = await axios.post("https://civilconultancy-website.onrender.com/api/contact", {
         ...formData,
         submittedAt: new Date().toISOString(),
       }, {
