@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -7,6 +7,14 @@ import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
+function ScrollToTop() {
+    const { pathname } = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+    return null;
+}
 
 function App() {
     const [message, setMessage] = useState("");
@@ -20,6 +28,7 @@ function App() {
 
     return (
         <Router>
+            <ScrollToTop />
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />

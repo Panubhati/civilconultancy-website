@@ -52,7 +52,9 @@ const contactSchema = new mongoose.Schema({
     country: String,
     city: String,
     mobile: String,
+    message: String,
     privacyPolicy: Boolean,
+    submittedAt: { type: Date, default: Date.now },
 });
 
 const Contact = mongoose.model("Contact", contactSchema);
