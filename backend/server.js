@@ -64,7 +64,17 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model("Contact", contactSchema);
 
-// ✅ API Route to Handle Form Submission
+// ✅ Define Consultation Form Schema
+const consultationSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    phone: { type: String, required: true },
+    city: String,
+    submittedAt: { type: Date, default: Date.now },
+});
+
+const Consultation = mongoose.model("Consultation", consultationSchema);
+
+// ✅ API Route to Handle Contact Form Submission
 app.post("/api/contact", async (req, res) => {
     try {
         const newContact = new Contact(req.body);
@@ -72,6 +82,24 @@ app.post("/api/contact", async (req, res) => {
         res.status(201).json({ message: "Form submitted successfully!" });
     } catch (error) {
         console.error("Error saving contact form:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// ✅ API Route to Handle Consultation Form Submission
+app.post("/api/consultation", async (req, res) => {
+    try {
+        const { name, phone, city } = req.body;
+
+        if (!name || !phone) {
+            return res.status(400).json({ error: "Name and phone are required." });
+        }
+
+        const newConsultation = new Consultation({ name, phone, city });
+        await newConsultation.save();
+        res.status(201).json({ message: "Consultation booked successfully!" });
+    } catch (error) {
+        console.error("Error saving consultation:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
