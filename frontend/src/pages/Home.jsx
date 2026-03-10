@@ -203,7 +203,7 @@ function Home() {
         setError("");
         try {
             await axios.post(
-                "http://localhost:5000/api/consultation",
+                "https://civilconultancy-website.onrender.com/api/consultation",
                 formData,
                 { headers: { "Content-Type": "application/json" } }
             );
@@ -284,7 +284,7 @@ function Home() {
                         <p className="home-form-tagline">
                             Get a free consultation for your project
                         </p>
-                        
+
                         {error && <p style={{ color: "#dc2626", fontSize: "0.85rem", marginBottom: "0.8rem", textAlign: "left", fontWeight: "600" }}>{error}</p>}
 
                         <form onSubmit={handleSubmit}>
