@@ -10,9 +10,9 @@ import {
 import "./About.css";
 
 const stats = [
-    { value: "2022", label: "Founded" },
-    { value: "100+", label: "Projects Delivered" },
-    { value: "15+", label: "Experts on Team" },
+    { value: "2023", label: "Founded" },
+    { value: "50+", label: "Projects Delivered" },
+    { value: "3+", label: "Years of Experience" },
 ];
 
 const milestones = [
@@ -23,7 +23,7 @@ const milestones = [
             "The leadership journey started with focused civil engineering education and early practical site exposure.",
     },
     {
-        year: "2022",
+        year: "2023",
         title: "Firm Launch",
         description:
             "Anita Construction was established to deliver structural design, planning, and end-to-end construction support.",

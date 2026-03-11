@@ -21,9 +21,9 @@ import "./Home.css";
 /* ── Data ─────────────────────────────────────────────── */
 
 const headlineStats = [
-    { value: "100+", label: "Projects Delivered" },
-    { value: "15+", label: "Technical Experts" },
-    { value: "96%", label: "On-Time Handover" },
+    { value: "50+", label: "Projects Delivered" },
+    { value: "3+", label: "Years of Experience" },
+    { value: "100%", label: "Customer Satisfaction" },
 ];
 
 const aboutPrinciples = [

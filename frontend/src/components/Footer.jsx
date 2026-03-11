@@ -11,8 +11,8 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-    { label: "Instagram", href: "https://www.instagram.com/", icon: Instagram },
-    { label: "Facebook", href: "https://www.facebook.com/", icon: Facebook },
+    { label: "Instagram", href: "https://www.instagram.com/anita_construction84/", icon: Instagram },
+    { label: "Facebook", href: "https://www.facebook.com/share/16veVNv7ML/", icon: Facebook },
 ];
 
 function Footer() {
@@ -62,9 +62,9 @@ function Footer() {
                     <h4>Contact</h4>
                     <ul className="footer-list contact-list">
                         <li>
-                            <a href="mailto:yad.bhatikare@gmail.com" className="social-link">
+                            <a href="mailto:anitaconstruction84@gmail.com" className="social-link">
                                 <Mail size={16} />
-                                <span>yad.bhatikare@gmail.com</span>
+                                <span>anitaconstruction84@gmail.com</span>
                             </a>
                         </li>
                         <li>
@@ -86,7 +86,7 @@ function Footer() {
             </div>
         </footer>
 
-        
+
     );
 }
 
