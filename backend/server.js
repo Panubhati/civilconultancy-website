@@ -25,7 +25,7 @@ app.use(
             return callback(new Error("Not allowed by CORS"));
         },
         methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type"],
+        allowedHeaders: ["Content-Type", "x-admin-key"],
     })
 );
 
