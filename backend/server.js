@@ -24,7 +24,7 @@ app.use(
             }
             return callback(new Error("Not allowed by CORS"));
         },
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
         allowedHeaders: ["Content-Type", "x-admin-key"],
     })
 );
@@ -58,6 +58,7 @@ const contactSchema = new mongoose.Schema({
     mobile: String,
     message: String,
     privacyPolicy: Boolean,
+    contacted: { type: Boolean, default: false },
     submittedAt: { type: Date, default: Date.now },
 });
 
@@ -68,6 +69,7 @@ const consultationSchema = new mongoose.Schema({
     name: { type: String, required: true },
     phone: { type: String, required: true },
     city: String,
+    contacted: { type: Boolean, default: false },
     submittedAt: { type: Date, default: Date.now },
 });
 
@@ -106,12 +108,22 @@ app.post("/api/consultation", async (req, res) => {
 // ✅ Admin middleware – checks x-admin-key header
 const adminAuth = (req, res, next) => {
     const key = req.headers["x-admin-key"];
-    const ADMIN_KEY = process.env.ADMIN_KEY || "anita2026admin";
+    const ADMIN_KEY = process.env.ADMIN_KEY;
     if (key !== ADMIN_KEY) {
         return res.status(401).json({ error: "Unauthorized" });
     }
     next();
 };
+
+// ✅ Admin login verification endpoint
+app.post("/api/admin/login", (req, res) => {
+    const { password } = req.body;
+    const ADMIN_KEY = process.env.ADMIN_KEY;
+    if (password === ADMIN_KEY) {
+        return res.json({ success: true });
+    }
+    return res.status(401).json({ error: "Incorrect password" });
+});
 
 // ✅ GET all contact form submissions (admin only)
 app.get("/api/admin/contacts", adminAuth, async (req, res) => {
@@ -150,6 +162,36 @@ app.delete("/api/admin/consultations/:id", adminAuth, async (req, res) => {
     try {
         await Consultation.findByIdAndDelete(req.params.id);
         res.json({ message: "Consultation deleted" });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// ✅ PATCH – mark contact as contacted/uncontacted
+app.patch("/api/admin/contacts/:id", adminAuth, async (req, res) => {
+    try {
+        const { contacted } = req.body;
+        const updated = await Contact.findByIdAndUpdate(
+            req.params.id,
+            { contacted },
+            { new: true }
+        );
+        res.json(updated);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// ✅ PATCH – mark consultation as contacted/uncontacted
+app.patch("/api/admin/consultations/:id", adminAuth, async (req, res) => {
+    try {
+        const { contacted } = req.body;
+        const updated = await Consultation.findByIdAndUpdate(
+            req.params.id,
+            { contacted },
+            { new: true }
+        );
+        res.json(updated);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
