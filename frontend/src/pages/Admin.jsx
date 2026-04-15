@@ -232,6 +232,13 @@ function Admin() {
     /* ── RENDER CARD ───────────────────── */
     const renderContactCard = (c, showUndo = false) => (
         <div key={c._id} className={`admin-request-card ${c.contacted ? "admin-card-done" : ""}`}>
+            {c.contacted && (
+                <div className="admin-contacted-badge">
+                    <CheckCircle size={14} />
+                    <span>Contacted</span>
+                    {showUndo && <span className="admin-badge-type">Contact Form</span>}
+                </div>
+            )}
             <div className="admin-card-header">
                 <div className="admin-card-avatar">
                     {c.name?.charAt(0)?.toUpperCase() || "?"}
@@ -290,6 +297,13 @@ function Admin() {
 
     const renderConsultationCard = (c) => (
         <div key={c._id} className={`admin-request-card admin-card-consult ${c.contacted ? "admin-card-done" : ""}`}>
+            {c.contacted && (
+                <div className="admin-contacted-badge">
+                    <CheckCircle size={14} />
+                    <span>Contacted</span>
+                    <span className="admin-badge-type">Consultation</span>
+                </div>
+            )}
             <div className="admin-card-header">
                 <div className="admin-card-avatar admin-avatar-blue">
                     {c.name?.charAt(0)?.toUpperCase() || "?"}

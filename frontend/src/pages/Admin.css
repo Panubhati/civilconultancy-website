@@ -586,11 +586,32 @@
 /* ── Contacted Card State ─────────────────── */
 .admin-card-done {
     border-top-color: #10b981 !important;
-    opacity: 0.85;
 }
 
-.admin-card-done:hover {
-    opacity: 1;
+.admin-contacted-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: rgba(16, 185, 129, 0.06);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.12);
+    color: #059669;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.admin-contacted-badge svg {
+    flex-shrink: 0;
+}
+
+.admin-badge-type {
+    margin-left: auto;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #047857;
 }
 
 /* ── Green Tab Variant ────────────────────── */
