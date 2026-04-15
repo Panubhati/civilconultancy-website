@@ -8,7 +8,7 @@ const quickLinks = [
     { label: "Services", to: "/services" },
     { label: "Projects", to: "/projects" },
     { label: "Blogs", href: "https://example.com/blog" },
-    { label: "Site Map", to: "/admin" },
+    { label: "Admin", to: "/admin" },
 ];
 
 const socialLinks = [
