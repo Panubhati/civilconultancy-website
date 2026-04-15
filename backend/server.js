@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ CORS Middleware Configuration
 const allowedOrigins = [
     "http://localhost:5173",
     "https://anitaconstruction.in",
@@ -104,13 +103,62 @@ app.post("/api/consultation", async (req, res) => {
     }
 });
 
+// ✅ Admin middleware – checks x-admin-key header
+const adminAuth = (req, res, next) => {
+    const key = req.headers["x-admin-key"];
+    const ADMIN_KEY = process.env.ADMIN_KEY || "anita2026admin";
+    if (key !== ADMIN_KEY) {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
+    next();
+};
+
+// ✅ GET all contact form submissions (admin only)
+app.get("/api/admin/contacts", adminAuth, async (req, res) => {
+    try {
+        const contacts = await Contact.find().sort({ submittedAt: -1 });
+        res.json(contacts);
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// ✅ GET all consultation submissions (admin only)
+app.get("/api/admin/consultations", adminAuth, async (req, res) => {
+    try {
+        const consultations = await Consultation.find().sort({ submittedAt: -1 });
+        res.json(consultations);
+    } catch (error) {
+        console.error("Error fetching consultations:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// ✅ DELETE a contact submission (admin only)
+app.delete("/api/admin/contacts/:id", adminAuth, async (req, res) => {
+    try {
+        await Contact.findByIdAndDelete(req.params.id);
+        res.json({ message: "Contact deleted" });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// ✅ DELETE a consultation submission (admin only)
+app.delete("/api/admin/consultations/:id", adminAuth, async (req, res) => {
+    try {
+        await Consultation.findByIdAndDelete(req.params.id);
+        res.json({ message: "Consultation deleted" });
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 app.get("/", (req, res) => {
     res.send("");
 });
 
-
-
-// ✅ Start Server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

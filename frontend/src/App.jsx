@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Projects from "./pages/Projects";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -14,6 +15,27 @@ function ScrollToTop() {
         window.scrollTo(0, 0);
     }, [pathname]);
     return null;
+}
+
+function AppLayout({ message }) {
+    const { pathname } = useLocation();
+    const isAdmin = pathname === "/admin";
+
+    return (
+        <>
+            {!isAdmin && <Navbar />}
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/admin" element={<Admin />} />
+            </Routes>
+            {!isAdmin && <Footer />}
+            {!isAdmin && <p style={{ textAlign: "center", color: "green" }}>{message}</p>}
+        </>
+    );
 }
 
 function App() {
@@ -29,17 +51,7 @@ function App() {
     return (
         <Router>
             <ScrollToTop />
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/contact" element={<Contact />} />
-            </Routes>
-            <Footer />
-            {/* Show backend connection status */}
-            <p style={{ textAlign: "center", color: "green" }}>{message}</p>
+            <AppLayout message={message} />
         </Router>
     );
 }
